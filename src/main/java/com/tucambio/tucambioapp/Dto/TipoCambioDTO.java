@@ -9,6 +9,9 @@ package com.tucambio.tucambioapp.Dto;
  * @author J MAX
  */
 public class TipoCambioDTO {
+
+    public TipoCambioDTO(String formato_de_fecha_inválido_Use_ddMMyyyy) {
+    }
     private String fecha;
     private float venta;
     private float compra;

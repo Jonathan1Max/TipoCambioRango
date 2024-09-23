@@ -21,13 +21,13 @@ public class TipoCambioService {
         List<TipoCambioDTO> listaTipoCambio = new ArrayList<>();
 
         // Simular respuesta del servicio
-        TipoCambioDTO tipoCambio1 = new TipoCambioDTO();
+        TipoCambioDTO tipoCambio1 = new TipoCambioDTO("Formato de fecha inv\u00e1lido. Use dd/MM/yyyy.");
         tipoCambio1.setFecha(fechaInicio); // Usar la fecha de inicio
         tipoCambio1.setVenta(7.65f);
         tipoCambio1.setCompra(7.60f);
         listaTipoCambio.add(tipoCambio1);
 
-        TipoCambioDTO tipoCambio2 = new TipoCambioDTO();
+        TipoCambioDTO tipoCambio2 = new TipoCambioDTO("Formato de fecha inv\u00e1lido. Use dd/MM/yyyy.");
         tipoCambio2.setFecha(fechaFin); // Usar la fecha de fin
         tipoCambio2.setVenta(7.66f);
         tipoCambio2.setCompra(7.61f);

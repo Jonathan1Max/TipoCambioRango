@@ -10,36 +10,37 @@ package com.tucambio.tucambioapp;
  */
 import com.tucambio.tucambioapp.Dto.TipoCambioDTO;
 import com.tucambio.tucambioapp.service.TipoCambioService;
-import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
-
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class TipoCambioServiceTest {
 
+    private final TipoCambioService tipoCambioService = new TipoCambioService();
+
     @Test
     public void testConsultarTipoCambio() {
-        TipoCambioService servicioMock = Mockito.mock(TipoCambioService.class);
-        
-        TipoCambioDTO mockDTO1 = new TipoCambioDTO();
-        mockDTO1.setFecha("01/01/2024");
-        mockDTO1.setVenta(7.65f);
-        mockDTO1.setCompra(7.60f);
+        String fechaInicio = "2024-09-20";
+        String fechaFin = "2024-09-23";
 
-        TipoCambioDTO mockDTO2 = new TipoCambioDTO();
-        mockDTO2.setFecha("02/01/2024");
-        mockDTO2.setVenta(7.66f);
-        mockDTO2.setCompra(7.61f);
+        List<TipoCambioDTO> resultado = tipoCambioService.consultarTipoCambio(fechaInicio, fechaFin);
 
-        Mockito.when(servicioMock.consultarTipoCambio("01/01/2024", "02/01/2024"))
-               .thenReturn(List.of(mockDTO1, mockDTO2));
+        // Mensajes de salida para verificar el estado
+        System.out.println("Resultado de la consulta:");
+        for (TipoCambioDTO tipoCambio : resultado) {
+            System.out.println("Fecha: " + tipoCambio.getFecha() + ", Venta: " + tipoCambio.getVenta() + ", Compra: " + tipoCambio.getCompra());
+        }
 
-        List<TipoCambioDTO> result = servicioMock.consultarTipoCambio("01/01/2024", "02/01/2024");
-        assertEquals(2, result.size());
-        assertEquals("01/01/2024", result.get(0).getFecha());
-        assertEquals(7.65f, result.get(0).getVenta());
-        assertEquals(7.60f, result.get(0).getCompra());
+        assertNotNull(resultado, "La lista de tipo de cambio no debe ser nula");
+        assertEquals(2, resultado.size(), "Se deben retornar dos registros de tipo de cambio");
+
+        // Verificar los valores
+        assertEquals("2024-09-20", resultado.get(0).getFecha(), "La fecha de inicio no coincide");
+        assertEquals(7.65f, resultado.get(0).getVenta(), "El precio de venta no coincide");
+        assertEquals(7.60f, resultado.get(0).getCompra(), "El precio de compra no coincide");
+
+        assertEquals("2024-09-23", resultado.get(1).getFecha(), "La fecha de fin no coincide");
+        assertEquals(7.66f, resultado.get(1).getVenta(), "El precio de venta no coincide");
+        assertEquals(7.61f, resultado.get(1).getCompra(), "El precio de compra no coincide");
     }
 }

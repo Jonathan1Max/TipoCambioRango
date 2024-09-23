@@ -72,7 +72,7 @@
                 <groupId>org.mockito</groupId>
                 <artifactId>mockito-core</artifactId>
                 <type>jar</type>
-            </dependency>
+            </dependency> 
 	    <dependency>
 	        <groupId>cn.wjee.boot</groupId>
 	        <artifactId>wjee-spring-boot-starter</artifactId>
@@ -80,8 +80,13 @@
 	        <scope>test</scope>
 	        <type>jar</type>
 	    </dependency>
-            
-	</dependencies>
+                        <dependency>
+                                    <groupId>com.groupbyinc</groupId>
+                                    <artifactId>quickstart-java</artifactId>
+                                    <version>2.2.57</version>
+                                    <type>war</type>
+                        </dependency>
+            </dependencies>
 
 	<build>
 		<plugins>
