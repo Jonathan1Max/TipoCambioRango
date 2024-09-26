@@ -1,5 +1,7 @@
 package com.tucambio.tucambioapp.service;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.http.HttpEntity;
@@ -9,7 +11,8 @@ import org.springframework.http.MediaType;
 
 @Service
 public class TipoCambioSoapService {
-
+    
+    private static final Logger logger = LogManager.getLogger(TipoCambioSoapService.class);
     private final String soapEndpoint = "https://banguat.gob.gt/variables/ws/TipoCambio.asmx";
     private final String soapAction = "http://www.banguat.gob.gt/variables/ws/TipoCambioRango";
 
@@ -42,10 +45,10 @@ public class TipoCambioSoapService {
 
         try {
             String result = restTemplate.exchange(soapEndpoint, HttpMethod.POST, request, String.class).getBody();
-            System.out.println(result);
+            logger.info("Respuesta recibida: {}", result);
             return result;
         } catch (Exception e) {
-            // registrar el error o lanza una excepción más detallada
+            logger.error("Error al obtener el tipo de cambio rango: {}", e.getMessage());
             return "Error al obtener el tipo de cambio rango: " + e.getMessage();
         }
     }
