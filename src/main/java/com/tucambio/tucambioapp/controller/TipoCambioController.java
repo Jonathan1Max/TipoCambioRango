@@ -1,76 +1,75 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.tucambio.tucambioapp.controller;
 
-/**
- *
- * @author J MAX
- */
-import com.tucambio.tucambioapp.service.TipoCambioService;
-import com.tucambio.tucambioapp.Dto.ErrorResponse;
 import com.tucambio.tucambioapp.Dto.TipoCambioDTO;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.tags.Tag;
+import com.tucambio.tucambioapp.service.TipoCambioSoapService;
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.json.XML;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
-import java.util.List;
-
 @RestController
-@Tag(name = "Tipo de Cambio", description = "API para consultar el tipo de cambio")
 public class TipoCambioController {
 
-    private TipoCambioService tipoCambioService;
-
     @Autowired
-    public void setTipoCambioService(TipoCambioService tipoCambioService) {
-        this.tipoCambioService = tipoCambioService;
+    private TipoCambioSoapService tipoCambioSoapService;
+
+@GetMapping("/tipoCambioRango")
+public ResponseEntity<Object> obtenerTipoCambioRango(
+        @RequestParam String fechaInit,
+        @RequestParam String fechaFin) {
+    
+    String tipoCambio = tipoCambioSoapService.obtenerTipoCambioRango(fechaInit, fechaFin);
+
+    if (tipoCambio.contains("Error")) {
+        return ResponseEntity.status(500).body("Error: " + tipoCambio);
     }
 
-    @Operation(summary = "Consultar tipo de cambio en un rango de fechas")
-    @GetMapping("/tipoCambioRango")
-    public ResponseEntity<?> obtenerTipoCambioRango(
-        @Parameter(description = "Fecha inicio en formato dd/MM/yyyy") 
-        @RequestParam(value = "fecha_ini", required = true) String fechaInicio,
+    try {
+    JSONObject xmlJSONObj = XML.toJSONObject(tipoCambio);
 
-        @Parameter(description = "Fecha fin en formato dd/MM/yyyy") 
-        @RequestParam(value = "fecha_fin", required = true) String fechaFin) {
+    // Acceder al cuerpo de la respuesta SOAP
+    JSONObject var = xmlJSONObj.getJSONObject("soap:Envelope")
+            .getJSONObject("soap:Body")
+            .getJSONObject("TipoCambioRangoResponse")
+            .getJSONObject("TipoCambioRangoResult");
 
-        // Validar el formato de las fechas
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        LocalDate inicio;
-        LocalDate fin;
+    // Aquí asumimos que Vars es un objeto que puede tener múltiples Var
+    JSONArray varsArray = var.getJSONObject("Vars").getJSONArray("Var");
 
-        try {
-            inicio = LocalDate.parse(fechaInicio, formatter);
-            fin = LocalDate.parse(fechaFin, formatter);
-        } catch (DateTimeParseException e) {
-            return ResponseEntity.badRequest().body(new ErrorResponse("Formato de fecha inválido. Use dd/MM/yyyy."));
-        }
+    // Inicializar variables para la venta y compra inicial y final
+    float ventaInit = 0, compraInit = 0, ventaFin = 0, compraFin = 0;
 
-        // Mensaje de salida para verificar las fechas recibidas
-        System.out.println("Consultando tipo de cambio desde " + inicio + " hasta " + fin);
-
-        List<TipoCambioDTO> resultados = tipoCambioService.consultarTipoCambio(fechaInicio, fechaFin);
-
-        if (resultados.isEmpty()) {
-            System.out.println("No se encontraron resultados para el rango de fechas proporcionado.");
-            return ResponseEntity.ok(resultados);
-        } else {
-            System.out.println("Resultados obtenidos:");
-            for (TipoCambioDTO tipoCambio : resultados) {
-                System.out.println("Fecha: " + tipoCambio.getFecha() + ", Venta: " + tipoCambio.getVenta() + ", Compra: " + tipoCambio.getCompra());
-            }
-            return ResponseEntity.ok(resultados);
-        }
+    // Asegúrate de manejar correctamente el array Var
+    if (varsArray.length() > 0) {
+        JSONObject firstVar = varsArray.getJSONObject(0);
+        ventaInit = firstVar.getFloat("venta");
+        compraInit = firstVar.getFloat("compra");
     }
+
+    if (varsArray.length() > 1) {
+        JSONObject lastVar = varsArray.getJSONObject(varsArray.length() - 1);
+        ventaFin = lastVar.getFloat("venta");
+        compraFin = lastVar.getFloat("compra");
+    }
+
+    // Crear la respuesta con las fechas de inicio y fin incluidas
+    TipoCambioDTO tipoCambioDTO = new TipoCambioDTO(
+            fechaInit,
+            ventaInit,
+            compraInit,
+            fechaFin,
+            ventaFin,
+            compraFin
+    );
+
+    return ResponseEntity.ok(tipoCambioDTO);
+} catch (Exception e) {
+    e.printStackTrace();
+    return ResponseEntity.status(500).body("Error al procesar el XML: " + e.getMessage());
+}
+}
 }

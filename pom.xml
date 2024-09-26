@@ -1,91 +1,107 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" 
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
+        
 	<parent>
 		<groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-parent</artifactId>
 		<version>3.3.4</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
+        
 	<groupId>com.tucambio</groupId>
 	<artifactId>tucambioapp</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>tucambioapp</name>
 	<description>Despliega la información para dólares en el período de tiempo dado.</description>
 	<url/>
-	<licenses>
-		<license/>
-	</licenses>
-	<developers>
-		<developer/>
-	</developers>
-	<scm>
-		<connection/>
-		<developerConnection/>
-		<tag/>
-		<url/>
-	</scm>
+	
 	<properties>
-                <start-class>com.tucambio.tucambioapp.TuCambioApplication</start-class> <!-- Asegúrate de que esta clase exista -->
+                <start-class>com.tucambio.tucambioapp.TuCambioApplication</start-class>
 		<java.version>17</java.version>
 	</properties>
         
             <dependencies>
             
-            <!-- Spring Boot Starter Web -->
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter-web</artifactId>
-            </dependency>
+                <!-- Spring Boot Starter Web -->
+                <dependency>
+                        <groupId>org.springframework.boot</groupId>
+                        <artifactId>spring-boot-starter-web</artifactId>
+                </dependency>
 
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter-test</artifactId>
+                <dependency>
+			<groupId>com.fasterxml.jackson.dataformat</groupId>
+			<artifactId>jackson-dataformat-xml</artifactId>
+			<version>2.15.0</version>
+		</dependency>
+                
+                <!-- Spring Boot Starter test -->
+                <dependency>
+                        <groupId>org.springframework.boot</groupId>
+                        <artifactId>spring-boot-starter-test</artifactId>
                 <scope>test</scope>
-            </dependency>
-                                        
-            <!-- Swagger para la documentación del API -->
-            <dependency>
-		   <groupId>org.springdoc</groupId>
-		   <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
-		   <version>2.6.0</version>
-            </dependency>
+                </dependency>
+                                                        
+                <!-- Swagger para la documentación del API -->
+                <dependency>
+                        <groupId>org.springdoc</groupId>
+                        <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+                        <version>2.6.0</version>
+                </dependency>
           
-            <!-- Log4J para el logging -->
-            <dependency>
-                <groupId>org.apache.logging.log4j</groupId>
-                <artifactId>log4j-api</artifactId>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.logging.log4j</groupId>
-                <artifactId>log4j-core</artifactId>
-            </dependency>
+                <!-- Log4J para el logging -->
+                <dependency>
+                        <groupId>org.apache.logging.log4j</groupId>
+                        <artifactId>log4j-api</artifactId>
+                </dependency>
+                
+                <dependency>
+                        <groupId>org.apache.logging.log4j</groupId>
+                        <artifactId>log4j-core</artifactId>
+                </dependency>
 
-            <!-- JUnit y Mockito para pruebas unitarias -->
-            <dependency>
-                <groupId>org.junit.jupiter</groupId>
-                <artifactId>junit-jupiter-api</artifactId>
-                <type>jar</type>
-            </dependency>
-            <dependency>
-                <groupId>org.mockito</groupId>
-                <artifactId>mockito-core</artifactId>
-                <type>jar</type>
-            </dependency> 
-	    <dependency>
-	        <groupId>cn.wjee.boot</groupId>
-	        <artifactId>wjee-spring-boot-starter</artifactId>
-	        <version>2.7.18.1</version>
-	        <scope>test</scope>
-	        <type>jar</type>
-	    </dependency>
-                        <dependency>
-                                    <groupId>com.groupbyinc</groupId>
-                                    <artifactId>quickstart-java</artifactId>
-                                    <version>2.2.57</version>
-                                    <type>war</type>
-                        </dependency>
+                <!-- JUnit y Mockito para pruebas unitarias -->
+                <dependency>
+                        <groupId>org.junit.jupiter</groupId>
+                        <artifactId>junit-jupiter-api</artifactId>
+                        <type>jar</type>
+                </dependency>
+            
+                <dependency>
+                        <groupId>org.mockito</groupId>
+                        <artifactId>mockito-core</artifactId>
+                        <type>jar</type>
+                </dependency> 
+                
+                <dependency>
+                        <groupId>cn.wjee.boot</groupId>
+                        <artifactId>wjee-spring-boot-starter</artifactId>
+                        <version>2.7.18.1</version>
+                        <scope>test</scope>
+                        <type>jar</type>
+                </dependency>
+            
+                <dependency>
+			<groupId>org.json</groupId>
+			<artifactId>json</artifactId>
+			<version>20210307</version>
+                </dependency>
+                
+                <dependency>
+                        <groupId>com.groupbyinc</groupId>
+                        <artifactId>quickstart-java</artifactId>
+                        <version>2.2.57</version>
+                        <type>war</type>
+                </dependency>
+                
+                <dependency>
+                        <groupId>org.projectlombok</groupId>
+                        <artifactId>lombok</artifactId>
+                        <version>1.18.34</version>
+                        <type>jar</type>
+                </dependency>
             </dependencies>
 
 	<build>
