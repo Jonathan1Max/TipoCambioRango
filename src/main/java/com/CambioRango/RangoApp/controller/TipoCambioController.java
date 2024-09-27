@@ -1,7 +1,7 @@
-package com.tucambio.tucambioapp.controller;
+package com.CambioRango.RangoApp.controller;
 
-import com.tucambio.tucambioapp.Dto.TipoCambioDTO;
-import com.tucambio.tucambioapp.service.TipoCambioSoapService;
+import com.CambioRango.RangoApp.DTO.TipoCambioDTO;
+import com.CambioRango.RangoApp.service.TipoCambioSoapService;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.XML;

@@ -11,15 +11,15 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
         
-	<groupId>com.tucambio</groupId>
-	<artifactId>tucambioapp</artifactId>
+	<groupId>com.CambioRango</groupId>
+	<artifactId>RangoApp</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>tucambioapp</name>
+	<name>CambioRango</name>
 	<description>Despliega la información para dólares en el período de tiempo dado.</description>
 	<url/>
 	
 	<properties>
-                <start-class>com.tucambio.tucambioapp.TuCambioApplication</start-class>
+                <start-class>com.CambioRango.RangoApp.TuCambioApplication</start-class>
 		<java.version>17</java.version>
 	</properties>
         

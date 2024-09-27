@@ -1,6 +1,6 @@
-package com.tucambio.tucambioapp;
+package com.CambioRango.RangoApp.tests;
 
-import com.tucambio.tucambioapp.Dto.TipoCambioDTO;
+import com.CambioRango.RangoApp.DTO.TipoCambioDTO;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

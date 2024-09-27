@@ -1,10 +1,10 @@
-package com.tucambio.tucambioapp;
+package com.CambioRango.RangoApp.tests;
 
 /**
  *
  * @author J MAX
  */
-import com.tucambio.tucambioapp.service.TipoCambioSoapService;
+import com.CambioRango.RangoApp.service.TipoCambioSoapService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
